@@ -619,23 +619,40 @@
     <button id="backToTop" class="back-to-top">↑</button>
 
     <script>
-        const backToTopBtn = document.getElementById('backToTop');
+    const backToTopBtn = document.getElementById('backToTop');
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-        });
+    // Function to center the button at the bottom center
+    function positionButton() {
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
 
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+        // Set the button to be centered at the bottom
+        backToTopBtn.style.left = `${(windowWidth - backToTopBtn.offsetWidth) / 2}px`;
+        backToTopBtn.style.bottom = '20px'; // 20px from the bottom of the page
+    }
+
+    // Call positionButton function when the page loads or is resized
+    window.addEventListener('load', positionButton);
+    window.addEventListener('resize', positionButton);
+
+    // Show button after scrolling 500px
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+
+    // Scroll to top functionality
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
         });
-    </script>
+    });
+</script>
+
     <script src="js/scripts.js"></script>
             <!--Start of Tawk.to Script-->
 <script type="text/javascript">
