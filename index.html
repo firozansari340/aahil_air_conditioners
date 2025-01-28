@@ -78,26 +78,50 @@
     </style>
 </head>
 <body class="bg-gray-100">
-<!-- Navbar -->
+<!-- Navbar with Responsive Search Bar -->
 <nav class="fixed top-0 w-full bg-gradient-to-r from-gray-900 to-black text-white shadow-lg z-50">
     <div class="container mx-auto flex justify-between items-center py-4 px-6">
-        <!-- Logo -->
-        <a href="#" class="flex items-center text-3xl font-extrabold tracking-wider">
+        <!-- Logo (Hidden on Small Screens) -->
+        <a href="#" class="hidden lg:flex items-center text-3xl font-extrabold tracking-wider">
             <img src="assets/icons/logo.png" alt="Logo" class="h-10 w-10 mr-3"> <!-- Adjust size as needed -->
             Aahil Air Conditioners.
         </a>
 
+        <!-- Search Bar (Visible on Small Screens Only) -->
+        <div class="flex lg:hidden items-center relative w-full">
+            <input 
+                type="text" 
+                id="mobile-search" 
+                class="w-full p-3 pl-12 text-lg bg-gradient-to-r from-purple-500 to-indigo-800 text-white rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-400 transition-all shadow-xl" 
+                placeholder="Search for services...">
+            <div class="absolute inset-y-0 left-4 flex items-center text-white pointer-events-none">
+                <i class="fa fa-search"></i>
+            </div>
+        </div>
+
         <!-- Hamburger Menu (Mobile) -->
-        <button id="menu-toggle" class="lg:hidden text-2xl focus:outline-none">
+        <button id="menu-toggle" aria-label="Toggle menu" class="lg:hidden text-2xl focus:outline-none">
             &#9776;
         </button>
 
-        <!-- Nav Links -->
+        <!-- Nav Links (Desktop) -->
         <ul id="menu" class="hidden lg:flex space-x-8 text-lg">
             <li><a href="#services" class="hover:text-yellow-400 transition">Services</a></li>
             <li><a href="#about" class="hover:text-yellow-400 transition">About</a></li>
             <li><a href="#contact" class="hover:text-yellow-400 transition">Contact</a></li>
         </ul>
+
+        <!-- Search Bar (Desktop Only) -->
+        <div class="hidden lg:flex items-center relative w-1/4 ml-6">
+            <input 
+                type="text" 
+                id="desktop-search" 
+                class="w-full p-3 pl-12 text-lg bg-gradient-to-r from-purple-500 to-indigo-800 text-white rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-400 transition-all shadow-xl" 
+                placeholder="Search for services...">
+            <div class="absolute inset-y-0 left-4 flex items-center text-white pointer-events-none">
+                <i class="fa fa-search"></i>
+            </div>
+        </div>
     </div>
 
     <!-- Dropdown Menu (Mobile) -->
@@ -110,12 +134,31 @@
     </div>
 </nav>
 
+<!-- Search Bar and Menu Toggle Script -->
 <script>
+    // Toggle menu visibility (for mobile)
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
 
     menuToggle.addEventListener('click', () => {
         mobileMenu.classList.toggle('hidden');
+        menuToggle.setAttribute(
+            'aria-expanded',
+            mobileMenu.classList.contains('hidden') ? 'false' : 'true'
+        );
+    });
+
+    // Search Bar Functionality
+    const searchInputs = document.querySelectorAll('#mobile-search, #desktop-search');
+    searchInputs.forEach(searchInput => {
+        searchInput.addEventListener('input', () => {
+            const filter = searchInput.value.toLowerCase();
+            const services = document.querySelectorAll('.grid .bg-black');
+            services.forEach(service => {
+                const serviceName = service.querySelector('h3')?.innerText.toLowerCase();
+                service.style.display = serviceName?.includes(filter) ? '' : 'none';
+            });
+        });
     });
 </script>
 
@@ -129,46 +172,75 @@
         </div>
         <div class="absolute inset-0 z-0">
             <video autoplay loop muted class="w-full h-full object-cover opacity-30">
-                <source src="assets/videos/hero.mp4" type="video/mp4">
+                <source src="assets/videos/AC Repair.mp4" type="video/mp4">
             </video>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="py-16 bg-gradient-to-br from-gray-100 to-gray-200">
-        <div class="container mx-auto text-center">
-            <h2 class="text-4xl font-extrabold mb-12 animate-slide-in">Our Services</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-3">
-                    <img src="assets/images/hvac.png" alt="AC Repair" class="w-24 mx-auto mb-6">
-                    <h3 class="text-2xl font-semibold mb-4">HVAC AIR CONDITIONER</h3>
-                    <p class="text-gray-600">Fast and reliable fixes for all AC Repair brands and issues.</p>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-3">
-                    <img src="assets/images/vrf.png" alt="Washing Machine Repair" class="w-24 mx-auto mb-6">
-                    <h3 class="text-2xl font-semibold mb-4">VRF AIR CONDITIONER</h3>
-                    <p class="text-gray-600">Comprehensive solutions for all types of Washing Machines.</p>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-3">
-                    <img src="assets/images/vrv.png" alt="All Electrical Items Repair" class="w-24 mx-auto mb-6">
-                    <h3 class="text-2xl font-semibold mb-4">VRV AIR CONDITIONER</h3>
-                    <p class="text-gray-600">Expert services for all sizes and brands of Electrical Items.</p>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-3">
-                    <img src="assets/images/cold room-1.png" alt="All Electrical Items Repair" class="w-24 mx-auto mb-6">
-                    <h3 class="text-2xl font-semibold mb-4">COLD ROOM AIR CONDTIONER</h3>
-                    <p class="text-gray-600">Expert services for all sizes and brands of Electrical Items.</p>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-3">
-                    <img src="assets/images/window.png" alt="All Electrical Items Repair" class="w-24 mx-auto mb-6">
-                    <h3 class="text-2xl font-semibold mb-4">SPLIT & WINDOW AIR CONDITIONER</h3>
-                    <p class="text-gray-600">Expert services for all sizes and brands of Electrical Items.</p>
-                </div>
+<!-- Services Section -->
+<section id="services" class="py-16 bg-gradient-to-br from-gray-900 to-gray-800">
+    <div class="container mx-auto text-center">
+        
+        <!-- Title with modern animation -->
+        <h2 class="text-4xl font-extrabold mb-12 animate__animated animate__fadeIn text-white">Our Services</h2>
+        
+        <!-- Grid of Services -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+            <!-- Service Card 1 -->
+            <div class="service-card bg-black p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition transform hover:-translate-y-3 hover:scale-105 duration-300 hover:bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500">
+                <img src="assets/images/hvac.png" alt="AC Repair" class="w-24 mx-auto mb-6 animate__animated animate__zoomIn">
+                <h3 class="text-white text-2xl font-semibold mb-4">HVAC AIR CONDITIONER</h3>
+                <p class="text-white mb-4">Fast and reliable fixes for all AC Repair brands and issues.</p>
+                <a href="tel:+917217564337" class="text-white text-3xl mt-4 block hover:text-blue-500 transition-all">
+                    <i class="fa fa-phone-alt"></i> Call Now
+                </a>
+            </div>
+            
+            <!-- Service Card 2 -->
+            <div class="service-card bg-black p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition transform hover:-translate-y-3 hover:scale-105 duration-300 hover:bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500">
+                <img src="assets/images/vrf.png" alt="Washing Machine Repair" class="w-24 mx-auto mb-6 animate__animated animate__zoomIn">
+                <h3 class="text-white text-2xl font-semibold mb-4">VRF AIR CONDITIONER</h3>
+                <p class="text-white mb-4">Comprehensive solutions for all types of Washing Machines.</p>
+                <a href="tel:+917217564337" class="text-white text-3xl mt-4 block hover:text-blue-500 transition-all">
+                    <i class="fa fa-phone-alt"></i> Call Now
+                </a>
+            </div>
 
+            <!-- Service Card 3 -->
+            <div class="service-card bg-black p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition transform hover:-translate-y-3 hover:scale-105 duration-300 hover:bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500">
+                <img src="assets/images/vrv.png" alt="Electrical Items Repair" class="w-24 mx-auto mb-6 animate__animated animate__zoomIn">
+                <h3 class="text-white text-2xl font-semibold mb-4">VRV AIR CONDITIONER</h3>
+                <p class="text-white mb-4">Expert services for all sizes and brands of Electrical Items.</p>
+                <a href="tel:+917217564337" class="text-white text-3xl mt-4 block hover:text-blue-500 transition-all">
+                    <i class="fa fa-phone-alt"></i> Call Now
+                </a>
+            </div>
+
+            <!-- Service Card 4 -->
+            <div class="service-card bg-black p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition transform hover:-translate-y-3 hover:scale-105 duration-300 hover:bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500">
+                <img src="assets/images/cold room-1.png" alt="Cold Room Air Conditioner" class="w-24 mx-auto mb-6 animate__animated animate__zoomIn">
+                <h3 class="text-white text-2xl font-semibold mb-4">COLD ROOM AIR CONDITIONER</h3>
+                <p class="text-white mb-4">Expert services for all sizes and brands of Cold Rooms.</p>
+                <a href="tel:+917217564337" class="text-white text-3xl mt-4 block hover:text-blue-500 transition-all">
+                    <i class="fa fa-phone-alt"></i> Call Now
+                </a>
+            </div>
+
+            <!-- Service Card 5 -->
+            <div class="service-card bg-black p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition transform hover:-translate-y-3 hover:scale-105 duration-300 hover:bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500">
+                <img src="assets/images/window.png" alt="Window AC" class="w-24 mx-auto mb-6 animate__animated animate__zoomIn">
+                <h3 class="text-white text-2xl font-semibold mb-4">SPLIT & WINDOW AIR CONDITIONER</h3>
+                <p class="text-white mb-4">Expert services for all sizes and brands of Air Conditioners.</p>
+                <a href="tel:+917217564337" class="text-white text-3xl mt-4 block hover:text-blue-500 transition-all">
+                    <i class="fa fa-phone-alt"></i> Call Now
+                </a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
+<!-- Add animations (import animate.css) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
 
         <!--Why Us Section-->
@@ -288,6 +360,161 @@
         100% { opacity: 1; transform: translateY(0); }
     }
 </style>
+
+
+
+
+
+<!-- Slider Section -->
+<section class="slider-section relative w-full max-w-4xl mx-auto py-8">
+    <div class="slider-container relative w-full">
+        <div class="slider flex overflow-hidden" id="slider">
+            <div class="slide animate__animated animate__fadeInUp">
+                <img class="animate__animated animate__fadeIn" src="assets/images/silde-1.png" alt="Banner 1">
+            </div>
+            <div class="slide animate__animated animate__fadeInUp">
+                <img class="animate__animated animate__fadeIn" src="assets/images/silde-2.png" alt="Banner 2">
+            </div>
+            <div class="slide animate__animated animate__fadeInUp">
+                <img class="animate__animated animate__fadeIn" src="assets/images/slide-3.png" alt="Banner 3">
+            </div>
+        </div>
+        <!-- Navigation Buttons -->
+        <button id="prev" class="nav-button transform hover:scale-125 transition-all duration-300 animate__animated animate__zoomIn">←</button>
+        <button id="next" class="nav-button transform hover:scale-125 transition-all duration-300 animate__animated animate__zoomIn">→</button>
+    </div>
+
+    <!-- Styles and Scripts within the section -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.7s ease-in-out;
+        }
+        .slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        /* Image Styling */
+        .slide img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 1rem;
+            filter: brightness(0.8);
+            transition: all 0.4s ease-in-out;
+        }
+
+        .slide img:hover {
+            filter: brightness(1);
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .nav-button {
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease-in-out;
+            border: 2px solid #fff;
+        }
+
+        .nav-button:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: scale(1.2);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Parallax effect */
+        .slide img {
+            transition: transform 0.3s ease-out;
+        }
+
+        .slider-container:hover .slide img {
+            transform: scale(1.1);
+        }
+
+        /* Navigation Button Position */
+        #prev {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+        }
+
+        #next {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .slide img {
+                height: 400px;
+            }
+
+            .nav-button {
+                padding: 10px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide img {
+                height: 300px;
+            }
+
+            .nav-button {
+                padding: 8px;
+                font-size: 18px;
+            }
+        }
+    </style>
+
+    <script>
+        const slider = document.getElementById('slider');
+        const nextButton = document.getElementById('next');
+        const prevButton = document.getElementById('prev');
+
+        nextButton.addEventListener('click', () => {
+            slider.scrollBy({ left: slider.clientWidth + 24, behavior: 'smooth' });
+            slider.classList.add('animate__animated', 'animate__bounceInRight');
+        });
+
+        prevButton.addEventListener('click', () => {
+            slider.scrollBy({ left: -(slider.clientWidth + 24), behavior: 'smooth' });
+            slider.classList.add('animate__animated', 'animate__bounceInLeft');
+        });
+    </script>
+</section>
 
 
     <!-- Contact Us Section -->
